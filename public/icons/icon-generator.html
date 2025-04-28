@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus Icon Generator</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      color: #7000FF;
+    }
+    button {
+      background-color: #7000FF;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    .preview {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .icon-preview {
+      text-align: center;
+    }
+    .icon-preview canvas {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Nexus PWA Icon Generator</h1>
+  <p>This tool generates PNG versions of the Nexus icon for PWA requirements.</p>
+  
+  <div>
+    <button onclick="generateIcons()">Generate Icons</button>
+    <button onclick="downloadAll()">Download All</button>
+  </div>
+  
+  <div class="preview" id="preview"></div>
+
+  <!-- Original SVG (hidden) -->
+  <div style="display: none;">
+    <svg id="originalSvg" width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="512" height="512" rx="128" fill="#7000FF" />
+      <path d="M128 128H256V256H128V128Z" fill="#FF003D" />
+      <path d="M256 128H384V256H256V128Z" fill="#0070F3" />
+      <path d="M128 256H256V384H128V256Z" fill="#00CC88" />
+      <path d="M256 256H384V384H256V256Z" fill="#FFCD00" />
+    </svg>
+  </div>
+
+  <script>
+    const sizes = [192, 384, 512];
+    const previews = document.getElementById('preview');
+    
+    function generateIcons() {
+      // Clear previous previews
+      previews.innerHTML = '';
+      
+      // Get the SVG content
+      const svgElement = document.getElementById('originalSvg');
+      const svgString = new XMLSerializer().serializeToString(svgElement);
+      const svgBlob = new Blob([svgString], {type: 'image/svg+xml'});
+      const svgUrl = URL.createObjectURL(svgBlob);
+      
+      // Generate each size
+      sizes.forEach(size => {
+        const img = new Image();
+        img.onload = function() {
+          // Create canvas of appropriate size
+          const canvas = document.createElement('canvas');
+          canvas.width = size;
+          canvas.height = size;
+          canvas.id = `canvas-${size}`;
+          const ctx = canvas.getContext('2d');
+          
+          // Draw image on canvas
+          ctx.drawImage(img, 0, 0, size, size);
+          
+          // Create preview
+          const container = document.createElement('div');
+          container.className = 'icon-preview';
+          
+          const sizeText = document.createElement('p');
+          sizeText.textContent = `${size}x${size}`;
+          
+          const downloadBtn = document.createElement('button');
+          downloadBtn.textContent = 'Download';
+          downloadBtn.onclick = () => downloadIcon(size);
+          
+          container.appendChild(canvas);
+          container.appendChild(sizeText);
+          container.appendChild(downloadBtn);
+          
+          previews.appendChild(container);
+        };
+        img.src = svgUrl;
+      });
+    }
+    
+    function downloadIcon(size) {
+      const canvas = document.getElementById(`canvas-${size}`);
+      const link = document.createElement('a');
+      link.download = `icon-${size}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+    
+    function downloadAll() {
+      sizes.forEach(size => {
+        downloadIcon(size);
+      });
+    }
+    
+    // Auto-generate on load
+    window.onload = generateIcons;
+  </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "formulahendry.auto-rename-tag",
+    "ms-vscode.vscode-typescript-next",
+    "editorconfig.editorconfig",
+    "gruntfuggly.todo-tree",
+    "github.vscode-github-actions",
+    "mikestead.dotenv",
+    "christian-kohler.path-intellisense"
+  ]
+}

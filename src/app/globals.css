@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Base colors */
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    
+    /* Primary: Fire/Lava theme - orangish red */
+    --primary: 16 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Secondary: Deep orange */
+    --secondary: 20 100% 60%;
+    --secondary-foreground: 0 0% 100%;
+    
+    /* Accent: Purple */
+    --accent: 270 76% 53%;
+    --accent-foreground: 0 0% 100%;
+    
+    /* Utility colors */
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 16 100% 50%;
+    
+    /* Radius */
+    --radius-sm: 0.3rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.8rem;
+  }
+
+  .dark {
+    /* Base colors */
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 5%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 5%;
+    --popover-foreground: 0 0% 98%;
+    
+    /* Primary: Fire/Lava theme - more intense in dark mode */
+    --primary: 16 100% 55%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Secondary: Deep orange */
+    --secondary: 20 90% 48%;
+    --secondary-foreground: 0 0% 100%;
+    
+    /* Accent: Purple */
+    --accent: 270 76% 60%;
+    --accent-foreground: 0 0% 100%;
+    
+    /* Utility colors */
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --destructive: 0 62.8% 40.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 16 75% 50%;
+  }
+  
+  /* Custom gradients */
+  .bg-gradient-lava {
+    background: linear-gradient(to right, hsl(16, 100%, 50%), hsl(20, 100%, 60%));
+  }
+  
+  .bg-gradient-fire-purple {
+    background: linear-gradient(to right, hsl(16, 100%, 50%), hsl(270, 76%, 53%));
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer utilities {
+  .animate-in {
+    animation: animate-in 0.3s ease-in-out;
+  }
+  
+  @keyframes animate-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
